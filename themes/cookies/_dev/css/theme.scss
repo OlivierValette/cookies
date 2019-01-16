@@ -1,0 +1,17 @@
+$body-background-color: #fefefe;
+
+/* bootstrap variables override  */
+$brand-primary: yellow;
+
+/* bootstrap import */
+@import "~bootstrap/scss/bootstrap";
+
+body {
+  background: $body-background-color;
+}
+
+.product-miniature {
+  @extend .col-12;
+  @extend .col-md-4;
+  @extend .col-xl-3;
+}
