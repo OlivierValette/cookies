@@ -46,10 +46,6 @@ app/config/config.php
 
 # Themes, modules and overrides
 
-modules/*
-override/*
-/themes/StarterTheme
-
 # Vendors and dependencies
 
 bower_components/

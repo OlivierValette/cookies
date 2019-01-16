@@ -10,7 +10,7 @@ Tools :
 
 Custom theme: "cookies" :cookie:
 
-![cookies theme](theme/cookies/preview.png)
+![cookies theme](themes/cookies/preview.png)
 
 
 ```
