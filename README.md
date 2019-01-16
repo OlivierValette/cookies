@@ -10,11 +10,8 @@ Tools :
 
 Custom theme: "cookies" :cookie:
 
-![cookies theme](preview.png)
+![cookies theme](theme/cookies/preview.png)
 
-<img src="preview.png"
-     alt="cookies theme"
-     style="float: left; margin-right: 10px;" />
 
 ```
 cd /theme/cookies/_dev
