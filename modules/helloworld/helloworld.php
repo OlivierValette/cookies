@@ -15,6 +15,9 @@ class Helloworld extends Module implements WidgetInterface
         $this->version = '1.0.0';
         $this->author = 'Olivier Valette';
         $this->bootstrap = true;
+        $this->controllers = [
+            'default',
+        ];
         parent::__construct();
         
         $this->displayName = $this->l('Hello world');
