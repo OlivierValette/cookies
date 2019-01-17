@@ -78,8 +78,7 @@ class Helloworld extends Module implements WidgetInterface
     
     // better than hookDisplayLeftColumn() with a specific hook
     // these two methods allow to hook everywhere, with widget in back-office Display/Position
-    
-    public function renderWidget($hookName, array $configuration)
+        public function renderWidget($hookName, array $configuration)
     {
         $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
         return $this->fetch('module:helloworld/views/templates/hook/helloworld.tpl');
@@ -90,5 +89,88 @@ class Helloworld extends Module implements WidgetInterface
         return [
             'name' => Configuration::get('HELLO_WORLD_NAME'),
         ];
+    }
+    
+    // method for module configuration in back-office
+    public function getContent()
+    {
+        $output = '';
+        if (Tools::isSubmit('submit'.$this->name)) {
+            $hello_world_name = Tools::getValue('HELLO_WORLD_NAME');
+            if (!$hello_world_name ||
+                empty($hello_world_name) ||
+                !Validate::isGenericName($hello_world_name)) {
+                $output .= $this->displayError($this->l('Invalid configuration value'));
+            } else {
+                Configuration::updateValue('HELLO_WORLD_NAME', $hello_world_name);
+                $output .= $this->displayConfirmation($this->l('Settings updated'));
+            }
+        }
+        return $output.$this->displayForm();
+    }
+    
+    public function displayForm()
+    {
+        // get default language
+        $default_lang = (int)Configuration::get('PS_LANG_DEFAULT');
+    
+        // init fields form array
+        $field_form = [];
+        $field_form[0]['form'] = [
+            'legend' => [
+                'title' => $this->l('Hello settings'),
+            ],
+            'input' => [
+                [
+                  'type' => 'text',
+                  'label' => $this->l('Configuration value'),
+                  'name' => 'HELLO_WORLD_NAME',
+                  'size' => 20,
+                  'required' => true,
+                ],
+                [
+                    'type' => 'switch',
+                    'label' => $this->l('Your option'),
+                    'name' => 'HELLO_SWITCH',
+                    'values' => [
+                        [
+                            'id' => 'type_switch_on',
+                            'value' => 1,
+                        ],
+                        [
+                            'id' => 'type_switch_off',
+                            'value' => 0,
+                        ],
+                    ],
+                ],
+            ],
+            'submit' => [
+                'title' => $this->l('Save'),
+            ],
+        ];
+        
+        $helper = new HelperForm();
+        
+        // Module, token and currentIndex
+        $helper->module = $this;
+        $helper->name_controller = $this->name;
+        $helper->token = Tools::getAdminTokenLite('AdminModules');
+        $helper->currentIndex = AdminController::$currentIndex.'&configure='.$this->name;
+        
+        // language
+        $helper->default_form_language = $default_lang;
+        $helper->allow_employee_form_lang = $default_lang;
+        
+        // title and toolbar
+        $helper->title = $this->displayName;
+        $helper->show_toolbar = true;
+        $helper->toolbar_scroll = true;
+        $helper->submit_action = 'submit'.$this->name;
+        
+        // load current value
+        $helper->fields_value['HELLO_WORLD_NAME'] = Configuration::get('HELLO_WORLD_NAME');
+        $helper->fields_value['HELLO_SWITCH'] = 0;
+        
+        return $helper->generateForm($field_form);
     }
 }
