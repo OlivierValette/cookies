@@ -1,10 +1,12 @@
 <?php
 
+use \PrestaShop\PrestaShop\Core\Module\WidgetInterface;
+
 if (!defined('_PS_VERSION_')) {
     exit;
 }
 
-class Helloworld extends Module
+class Helloworld extends Module implements WidgetInterface
 {
     
     public function __construct()
@@ -70,7 +72,23 @@ class Helloworld extends Module
             'modules-helloworld',
             'module/'.$this->name.'/views/asset/js/helloworld.js',
             ['position' => 'bottom', 'priority' => 150]
-        );*/
+        ); */
         
+    }
+    
+    // better than hookDisplayLeftColumn() with a specific hook
+    // these two methods allow to hook everywhere, with widget in back-office Display/Position
+    
+    public function renderWidget($hookName, array $configuration)
+    {
+        $this->smarty->assign($this->getWidgetVariables($hookName, $configuration));
+        return $this->fetch('module:helloworld/views/templates/hook/helloworld.tpl');
+    }
+    
+    public function getWidgetVariables($hookName, array $configuration)
+    {
+        return [
+            'name' => Configuration::get('HELLO_WORLD_NAME'),
+        ];
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+    <name>Helloworld</name>
+    <displayName><![CDATA[Hello world]]></displayName>
+    <version><![CDATA[1.0.0]]></version>
+    <description><![CDATA[This is an example module]]></description>
+    <author><![CDATA[Olivier Valette]]></author>
+    <tab><![CDATA[]]></tab>
+    <is_configurable>0</is_configurable>
+    <need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>
